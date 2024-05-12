@@ -2,7 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <unistd.h>
-#include "fiss.h"
+#include <fiss/fiss.h>
 int vWv_run(int argc, char** argv){
 	FILE *fp;
 	size_t cur_size = 1024;
@@ -28,6 +28,21 @@ int vWv_run(int argc, char** argv){
 		}
 		else{
 			fiss_error("Fissure installation error");
+			return 1;
+		}
+		
+	}
+	if(strcmp(argv[1], "fwc") == 0 || strcmp(argv[1], "fastwebsitecontent") == 0){
+		fiss_info("Downloading fwc...");
+		char* argk = malloc(sizeof("https://raw.githubusercontent.com/Dizabanik/diz_install_shell_scripts/main/fwc.sh")+1);
+		strcpy(argk,"https://raw.githubusercontent.com/Dizabanik/diz_install_shell_scripts/main/fwc.sh");
+		argv[1] = argk;
+		if(vWv_run(2, argv) == 0){
+			fiss_info("fwc installation successful!");
+			return 0;
+		}
+		else{
+			fiss_error("fwc installation error");
 			return 1;
 		}
 		
